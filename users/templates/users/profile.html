@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-md-6">
                         {% if user == request.user %}
-                        <a href="{% url 'users:update-profile' user.profile.id %}" class="btn btn-outline-info float-right"
+                        <a href="{% url 'users:update_profile' user.profile.id %}" class="btn btn-outline-info float-right"
                             style="color: black;">Update</a>
                         {% endif %}
                     </div>

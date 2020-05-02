@@ -1,6 +1,6 @@
-from django.shortcuts import render,  redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import get_user_model, login
-from django.views.generic import View, UpdateView, DetailView
+from django.views.generic import View, UpdateView, DetailView, TemplateView
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -10,6 +10,8 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 
 from .forms import RegisterForm
 from .models import Profile
@@ -77,9 +79,9 @@ def activate_account(request, uidb64, token):
     return redirect('user:register')
 
 
-class ProfileView(LoginRequiredMixin, OwnerOnlyMixin, DetailView):
+class ProfileView(LoginRequiredMixin, TemplateView):
     """To display the User Profile"""
-    model = Profile
+    # model = Profile
     template_name = 'users/profile.html'
 
 
@@ -87,6 +89,12 @@ class ProfileUpdate(LoginRequiredMixin, OwnerOnlyMixin, UpdateView):
     """To update the user profile"""
     model = Profile
     fields = ('first_name', 'last_name', 'image', 'location', 'about_me', 'phone')
+    success_url = reverse_lazy('users:profile')
+
+
+class UserPasswordChangeView(PasswordChangeView):
+    template_name = 'users/password_change_form.html'
+    success_url = reverse_lazy('users:password_change_done')
 
 
 
