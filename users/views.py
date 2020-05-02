@@ -73,10 +73,10 @@ def activate_account(request, uidb64, token):
         user.save()
         login(request, user)
         messages.success(request, "Your account has been activated successfully!")
-        return redirect('users:profile', user.pk)
+        return redirect('users:profile')
     
     messages.error(request, 'Activation link is invalid!')
-    return redirect('user:register')
+    return redirect('users:register')
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):

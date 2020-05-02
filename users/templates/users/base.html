@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Users App</title>
     <!-- bootstrap  -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -51,14 +51,13 @@
                 </li>
             </ul>
 
-
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">Hello {{user.profile.first_name}}</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown04">
+                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a>
                         <a class="dropdown-item" href="{% url 'users:password_change' %}">Change Password</a>
                         <a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a>
@@ -81,7 +80,21 @@
         </div>
     </nav>
 
+
+    <!-- messages -->
+    <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info">
+            {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+
     <!-- body block -->
+
     {% block body %}
 
     {% endblock %}
